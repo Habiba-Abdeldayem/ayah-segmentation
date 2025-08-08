@@ -9,7 +9,7 @@ Transcribes Quran recitation audio with word-level timestamps using `faster-whis
 ```bash
 # 1. Create and activate virtual environment
 python -m venv venv
-.env\Scripts\activate       # Windows
+.\venv\Scripts\activate       # Windows
 # source venv/bin/activate    # macOS/Linux
 
 # 2. Install dependencies
@@ -29,3 +29,4 @@ python transcribe.py
 Output will be saved to `transcription_output.txt`.
 
 ---
+
