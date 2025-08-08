@@ -1,15 +1,19 @@
-# transcribe.py
-
 from faster_whisper import WhisperModel
 
-# Load the Quran-specific Arabic Whisper model
+
 model = WhisperModel("OdyAsh/faster-whisper-base-ar-quran", device="cpu", compute_type="int8")
 
-# Transcribe the recitation
-segments, info = model.transcribe("001.mp3", beam_size=5, word_timestamps=True)
 
-# Save word-level results
-with open("transcription.txt", "w", encoding="utf-8") as f:
+audio_path = "001.mp3"
+
+
+segments, info = model.transcribe(audio_path, word_timestamps=True)
+
+output_file = "transcription_output.txt"
+with open(output_file, "w", encoding="utf-8") as f:
     for segment in segments:
-        print(f"[{segment.start:.2f}s - {segment.end:.2f}s] {segment.text}")
-        f.write(f"[{segment.start:.2f}s - {segment.end:.2f}s] {segment.text}\n")
+        f.write(segment.text + "\n")
+        for word in segment.words:
+            f.write(f"[{word.start:.2f}s - {word.end:.2f}s] {word.word}\n")
+
+print(f"✅ Transcription saved to: {output_file}")
